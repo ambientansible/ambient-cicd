@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 networks:
   prodnetwork:
@@ -29,7 +29,6 @@ services:
     - nexus
     - sonar
     - jmeter
-    - gitlab-ce
   environment:
     - NEXUS_PORT=8081
     - SONAR_PORT=9000
@@ -41,26 +40,8 @@ services:
   image: ambientdocker/docker-sonar
   ports:
    - "19000:9000"
-   - "5432:5432"
   networks:
     - prodnetwork
-  depends_on:
-    - sonardb
-  environment:
-   - SONARQUBE_JDBC_URL=jdbc:postgresql://sonardb:5432/sonar
-   - SONARQUBE_JDBC_USERNAME=sonar
-   - SONARQUBE_JDBC_PASSWORD=sonar
-
- sonardb:
-  hostname: sonardb
-  networks:
-    - prodnetwork
-  image: postgres
-  environment:
-   - POSTGRES_USER=sonar
-   - POSTGRES_PASSWORD=sonar
-  volumes:
-    - /opt/postgres/data:/var/lib/postgresql/data
 
  jmeter:
   hostname: jmeter
@@ -72,22 +53,14 @@ services:
     - /opt/jmeter/results:/results
     - /opt/jmeter/scripts:/scripts
 
- gitlab-ce:
-  hostname: gitlab-ce
-  networks:
-    - prodnetwork
-  image: gitlab/gitlab-ce:latest
-  environment:
-    GITLAB_OMNIBUS_CONFIG: |
-      gitlab_rails['gitlab_shell_ssh_port'] = 2222
-  ports:
-    - "443:443"
-    - "8181:80"
-    - "2222:22"
-  volumes:
-    - /opt/gitlab/config:/etc/gitlab
-    - /opt/gitlab/logs:/var/log/gitlab
-    - /opt/gitlab/data:/var/opt/gitlab
+  postgresql:
+    hostname: postgresql
+    networks:
+      - prodnetwork
+    build: ./postgresql
+    volumes:
+      - /opt/postgres/data:/var/lib/postgresql/data
+
 
 
 
