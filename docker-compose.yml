@@ -53,13 +53,14 @@ services:
     - /opt/jmeter/results:/results
     - /opt/jmeter/scripts:/scripts
 
-  postgresql:
-    hostname: postgresql
-    networks:
-      - prodnetwork
-    build: ./postgresql
-    volumes:
-      - /opt/postgres/data:/var/lib/postgresql/data
+
+ postgresql:
+  hostname: postgresql
+  networks:
+    - prodnetwork
+  build: ./postgresql
+  volumes:
+    - /opt/postgres/data:/var/lib/postgresql/data
 
 
 
