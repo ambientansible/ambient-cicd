@@ -36,7 +36,6 @@ services:
 
  sonar:
   hostname: sonar
-  #build: ./sonar
   image: ambientdocker/docker-sonar
   ports:
    - "19000:9000"
@@ -63,10 +62,19 @@ services:
     - "15432:5432"
   volumes:
     - /opt/postgres/data:/var/lib/postgresql/data
+  environment:
+    - POSTGRES_PASSWORD=p4ssw0rd
 
-
-
-
+pgadmin4:
+ hostname: pgadmin
+ networks:
+   - prodnetwork
+ image: dpage/pgadmin4
+ ports:
+   - "20100:80"
+ environment:
+   - PGADMIN_DEFAULT_EMAIL=dockerlite@gmail.com
+   - PGADMIN_DEFAULT_PASSWORD=p4ssw0rd
 
 
 
