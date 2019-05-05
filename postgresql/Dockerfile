@@ -175,7 +175,7 @@ RUN git -c http.sslVerify=false clone https://github.com/timescale/timescaledb.g
     sed -ri "s!^#?(shared_preload_libraries)\s*=\s*\S+.*!\1 = 'timescaledb'!"  /usr/share/postgresql/postgresql.conf.sample
 
 COPY docker-entrypoint.sh /usr/local/bin/
-chmod +x usr/local/bin/docker-entrypoint.sh
+RUN chmod +x usr/local/bin/docker-entrypoint.sh
 RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]
 
