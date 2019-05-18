@@ -4,6 +4,6 @@
   tasks:
     - name: Create a network with driver options
       docker_network:
-      name: prodnetwork
-      driver_options:
-        com.docker.network.bridge.name: bridge
+        name: prodnetwork
+        driver_options:
+          com.docker.network.bridge.name: bridge
