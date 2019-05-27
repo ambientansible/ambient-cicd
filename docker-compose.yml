@@ -57,7 +57,7 @@ services:
   hostname: postgresql
   networks:
     - prodnetwork
-  build: ./postgresql
+  image: plbformations/pg11timescaledb
   ports:
     - "15432:5432"
   volumes:
